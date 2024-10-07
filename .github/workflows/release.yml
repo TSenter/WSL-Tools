@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.repository.name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: dotnet restore --locked-mode
+
+      - name: Build application
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Update version in plugin.json
+        run: |
+          jq --arg version ${{ github.ref_name }} '.version = $version' plugin.json > plugin.json.tmp
+          mv plugin.json.tmp plugin.json
+        working-directory: dist
+
+      - name: Package application
+        run: zip -r ${{ github.event.repository.name }}-v${{ github.ref_name }}.zip .
+        working-directory: dist
+
+      - name: Upload asset
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: "dist/*.zip"
+          make_latest: true

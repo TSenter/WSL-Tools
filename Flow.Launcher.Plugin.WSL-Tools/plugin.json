@@ -1,0 +1,12 @@
+{
+    "ID": "D2C5A217DE5D4213850013E15E70097D",
+    "ActionKeyword": "*",
+    "Name": "WSL-Tools",
+    "Description": "a new plugin for Flow",
+    "Author": "TSenter",
+    "Version": "1.0.0",
+    "Language": "csharp",
+    "Website": "https://github.com/TSenter/Flow.Launcher.Plugin.WSL-Tools",
+    "IcoPath": "icon.png",
+    "ExecuteFileName": "Flow.Launcher.Plugin.WSL-Tools.dll"
+}
