@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <RootNamespace>Flow.Launcher.Plugin.WSLTools</RootNamespace>
+    <UseWpf>true</UseWpf>
     <AssemblyName>Flow.Launcher.Plugin.WSL-Tools</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.WSL-Tools</PackageId>
     <Authors>TSenter</Authors>
@@ -10,7 +13,6 @@
     <PackageTags>flow-launcher flow-plugin</PackageTags>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
