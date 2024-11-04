@@ -1,4 +1,6 @@
-# Flow.Launcher.Plugin.WSL-Tools
+# WSL-Tools
+
+A collection of utilities for working in WSL
 
 ==================
 
