@@ -29,7 +29,7 @@ jobs:
 
       - name: Update version in plugin.json
         run: |
-          jq --arg version ${{ github.ref_name }} '.version = $version' plugin.json > plugin.json.tmp
+          jq --arg version ${{ github.ref_name }} '.Version = $version' plugin.json > plugin.json.tmp
           mv plugin.json.tmp plugin.json
         working-directory: dist
 

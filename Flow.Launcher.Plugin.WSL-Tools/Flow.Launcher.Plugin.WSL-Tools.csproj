@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ProjectGuid>{AC0BB49D-FE8E-4E2F-AC8F-2CACD8427E6E}</ProjectGuid>
+    <RootNamespace>Flow.Launcher.Plugin.WSLTools</RootNamespace>
+    <UseWpf>true</UseWpf>
     <AssemblyName>Flow.Launcher.Plugin.WSL-Tools</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.WSL-Tools</PackageId>
     <Authors>TSenter</Authors>
@@ -9,18 +13,31 @@
     <RepositoryUrl>https://github.com/TSenter/Flow.Launcher.Plugin.WSL-Tools</RepositoryUrl>
     <PackageTags>flow-launcher flow-plugin</PackageTags>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AppendRuntimeIdentifierToOutputPath
+    >false</AppendRuntimeIdentifierToOutputPath>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode
+      Condition="'$(ContinuousIntegrationBuild)' == 'true'"
+    >true</RestoreLockedMode>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugSymbols>false</DebugSymbols>
     <DebugType>None</DebugType>
+    <OutputPath>../dist</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="plugin.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Assets/*.*" Condition="'$(Configuration)' == 'Release'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>%(Filename)%(Extension)</TargetPath>
+    </Content>
+    <Content Include="plugin.json" Condition="'$(Configuration)' == 'Release'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
