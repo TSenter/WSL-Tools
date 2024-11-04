@@ -53,8 +53,8 @@ _install() {
 }
 
 get_plugin_dir() {
-  local win_path="$(wslpath -w "$(powershell.exe -Command "echo \$env:AppData" | tr -d '\r'))"
-  echo "$win_path\\FlowLauncher\\Plugins\\$PLUGIN"
+  local win_path="$(wslpath "$(powershell.exe -Command "echo \$env:AppData" | tr -d '\r')")"
+  echo "$win_path/FlowLauncher/Plugins/$PLUGIN"
 }
 
 kill_flow() {

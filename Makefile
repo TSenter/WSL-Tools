@@ -1,7 +1,7 @@
 all: build install
 
 build:
-  ./make.sh build
+	./make.sh build
 
 clean:
 	./make.sh clean
