@@ -8,7 +8,7 @@ build() {
     dotnet publish -c Debug
     return
   fi
-  echo "==================== Building Project ====================\n"
+  echo -e "==================== Building Project ====================\n"
   dotnet publish -c Release
   echo
 }
@@ -17,13 +17,12 @@ install() {
   if [[ ! -d "$BUILD_DIR" ]]; then
     echo "Build directory not found. Building project first..."
     build
-    return
   fi
   _install
 }
 
 uninstall() {
-  echo "==================== Uninstalling Plugin ====================\n"
+  echo -e "==================== Uninstalling Plugin ====================\n"
   kill_flow
   local plugin_dir="$(get_plugin_dir)"
   rm -rfv "$plugin_dir"
@@ -34,7 +33,7 @@ uninstall() {
 }
 
 clean() {
-  echo "==================== Cleaning Project ====================\n"
+  echo -e "==================== Cleaning Project ====================\n"
   local obj_dir="$(find . -type d -name obj)"
   local bin_dir="$(find . -type d -name bin)"
   rm -rf $obj_dir $bin_dir $BUILD_DIR && echo "Project cleaned successfully."
@@ -42,7 +41,7 @@ clean() {
 }
 
 _install() {
-  echo "==================== Installing Plugin ====================\n"
+  echo -e "==================== Installing Plugin ====================\n"
   kill_flow
   local plugin_dir="$(get_plugin_dir)"
   mkdir -p "$plugin_dir"
