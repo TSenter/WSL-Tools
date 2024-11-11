@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.WSLTools.Core;
+﻿using Flow.Launcher.Plugin.WSLTools.Core;
 
 namespace Flow.Launcher.Plugin.WSLTools.UI
 {
@@ -21,6 +21,17 @@ namespace Flow.Launcher.Plugin.WSLTools.UI
       {
         WslTools.GetSettings().gitFolder = value;
         OnPropertyChanged();
+      }
+    }
+
+    public string apiToken
+    {
+      get => WslTools.GetSettings().apiToken;
+      set
+      {
+        WslTools.GetSettings().apiToken = value;
+        OnPropertyChanged();
+        GithubApi.Init(WslTools.GetContext(), WslTools.GetSettings());
       }
     }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +18,11 @@ namespace Flow.Launcher.Plugin.WSLTools
       _context = context;
       _settings = context.API.LoadSettingJsonStorage<Settings>();
 
+      if (!string.IsNullOrEmpty(_settings.apiToken))
+      {
+        GithubApi.Init(context, _settings);
+      }
+
       await Task.CompletedTask;
     }
 
@@ -34,6 +39,7 @@ namespace Flow.Launcher.Plugin.WSLTools
         return query.ActionKeyword switch
         {
           "c" => await Task.Run(() => CodeCommand.Query(query, _settings, _context)),
+          "wt" => await Task.Run(() => UpdateCommand.Query(_settings, _context)),
           _ => await Task.Run(() => new List<Result> {
             new Result {
               Title = "Unknown action keyword - '" + query.ActionKeyword + "'",
