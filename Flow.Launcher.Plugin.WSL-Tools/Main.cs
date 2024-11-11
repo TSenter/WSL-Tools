@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.WSLTools
       {
         return query.ActionKeyword switch
         {
-          "c" => await Task.Run(() => Code.Query(query, _settings, _context)),
+          "c" => await Task.Run(() => CodeCommand.Query(query, _settings, _context)),
           _ => await Task.Run(() => new List<Result> {
             new Result {
               Title = "Unknown action keyword - '" + query.ActionKeyword + "'",
