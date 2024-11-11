@@ -16,7 +16,6 @@ namespace Flow.Launcher.Plugin.WSLTools
     private static readonly string owner = "TSenter";
     private static readonly string repoName = "WSL-Tools";
     private static readonly Regex assetNamePattern = new Regex(@"WSL-Tools-v(?:.+).zip");
-    private static Version currentVersion = null;
 
     public static async Task<List<Result>> Query(Settings settings, PluginInitContext context)
     {
@@ -26,7 +25,7 @@ namespace Flow.Launcher.Plugin.WSLTools
       {
         list.Add(new Result
         {
-          Title = $"Current Version: {currentVersion}",
+          Title = $"Current Version: {WslTools.GetVersion()}",
           SubTitle = "GitHub API token is required to check for updates",
           IcoPath = icon
         });
@@ -86,6 +85,7 @@ namespace Flow.Launcher.Plugin.WSLTools
 
     private static List<DownloadableAsset> GetDownloadableAssets(IEnumerable<Release> releases)
     {
+      Version currentVersion = WslTools.GetVersion();
       List<DownloadableAsset> assets = new List<DownloadableAsset>();
 
       bool foundLatestRelease = false;
