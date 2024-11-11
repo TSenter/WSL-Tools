@@ -18,25 +18,8 @@ namespace Flow.Launcher.Plugin.WSLTools
     private static readonly Regex assetNamePattern = new Regex(@"WSL-Tools-v(?:.+).zip");
     private static Version currentVersion = null;
 
-    public static void LoadCurrentVersion(PluginInitContext context)
-    {
-      if (currentVersion != null)
-      {
-        return;
-      }
-      try
-      {
-        currentVersion = new Version(context.CurrentPluginMetadata.Version);
-      }
-      catch (Exception)
-      {
-        currentVersion = new Version("0.0.0");
-      }
-    }
-
     public static async Task<List<Result>> Query(Settings settings, PluginInitContext context)
     {
-      LoadCurrentVersion(context);
       List<Result> list = new List<Result>();
 
       if (string.IsNullOrEmpty(settings.apiToken))
