@@ -4,41 +4,43 @@ namespace Flow.Launcher.Plugin.WSLTools.UI
 {
   public class SettingsViewModel : BaseModel
   {
-    public readonly PluginInitContext Context;
-    public Settings Settings { get; init; }
-
-    public SettingsViewModel(PluginInitContext context, Settings settings)
-    {
-      Settings = settings;
-      Context = context;
-    }
-
     public bool useSSHGit
     {
-      get => Settings.useSSHGit;
+      get => WslTools.GetSettings().useSSHGit;
       set
       {
-        Settings.useSSHGit = value;
+        WslTools.GetSettings().useSSHGit = value;
         OnPropertyChanged();
       }
     }
 
     public string gitFolder
     {
-      get => Settings.gitFolder;
+      get => WslTools.GetSettings().gitFolder;
       set
       {
-        Settings.gitFolder = value;
+        WslTools.GetSettings().gitFolder = value;
         OnPropertyChanged();
+      }
+    }
+
+    public string apiToken
+    {
+      get => WslTools.GetSettings().apiToken;
+      set
+      {
+        WslTools.GetSettings().apiToken = value;
+        OnPropertyChanged();
+        GithubApi.Init(WslTools.GetContext(), WslTools.GetSettings());
       }
     }
 
     public string distroName
     {
-      get => Settings.distroName;
+      get => WslTools.GetSettings().distroName;
       set
       {
-        Settings.distroName = value;
+        WslTools.GetSettings().distroName = value;
         OnPropertyChanged();
       }
     }

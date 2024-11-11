@@ -1,7 +1,8 @@
 {
-  "ID": "D2C5A217DE5D4213850013E15E70097E",
+  "ID": "D2C5A217DE5D4213850013E15E70097F",
   "ActionKeywords": [
-    "c"
+    "c",
+    "wt"
   ],
   "Name": "WSL-Tools",
   "Description": "A collection of utilities for working in WSL",

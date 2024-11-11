@@ -7,7 +7,7 @@ using Flow.Launcher.Plugin.WSLTools.Core;
 
 namespace Flow.Launcher.Plugin.WSLTools
 {
-  static class Code
+  static class CodeCommand
   {
     private static readonly string icon = "vscode.png";
 
