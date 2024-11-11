@@ -5,11 +5,11 @@ PLUGIN="Flow.Launcher.Plugin.WSL-Tools"
 
 build() {
   if [[ "$1" == "--debug" ]]; then
-    dotnet publish -c Debug
+    dotnet build -c Debug
     return
   fi
   echo -e "==================== Building Project ====================\n"
-  dotnet publish -c Release
+  dotnet build -c Release
   echo
 }
 
