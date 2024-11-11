@@ -6,5 +6,6 @@
     public string gitFolder { get; set; } = "/git";
     public string distroName { get; set; } = "Ubuntu";
     public bool useSSHGit { get; set; } = false;
+    public string version { get; set; }
   }
 }

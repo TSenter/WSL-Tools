@@ -12,6 +12,7 @@ namespace Flow.Launcher.Plugin.WSLTools
   {
     private static PluginInitContext _context;
     private static Settings _settings;
+    private static Version version;
 
     public async Task InitAsync(PluginInitContext context)
     {
@@ -23,6 +24,17 @@ namespace Flow.Launcher.Plugin.WSLTools
         GithubApi.Init(context, _settings);
       }
 
+      try
+      {
+        version = new Version(context.CurrentPluginMetadata.Version);
+      }
+      catch (Exception)
+      {
+        version = null;
+      }
+
+      CheckIfUpdated();
+
       await Task.CompletedTask;
     }
 
@@ -33,7 +45,6 @@ namespace Flow.Launcher.Plugin.WSLTools
 
     public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
     {
-      Console.WriteLine(query);
       try
       {
         return query.ActionKeyword switch
@@ -58,6 +69,32 @@ namespace Flow.Launcher.Plugin.WSLTools
       }
     }
 
+    private static void CheckIfUpdated() {
+      if (string.IsNullOrEmpty(_settings.apiToken))
+      {
+        return;
+      }
+
+      string priorVersion = _settings.version;
+
+      if (priorVersion == null) {
+        _settings.version = version.ToString();
+        _context.API.SaveSettingJsonStorage<Settings>();
+
+        _context.API.ShowMsg("WSL-Tools has been installed");
+
+        return;
+      }
+
+      if (version != null && priorVersion != version.ToString())
+      {
+        _settings.version = version.ToString();
+        _context.API.SaveSettingJsonStorage<Settings>();
+
+        _context.API.ShowMsg("WSL-Tools has been updated to version " + version);
+      }
+    }
+
     public static Settings GetSettings()
     {
       return _settings;
@@ -66,6 +103,11 @@ namespace Flow.Launcher.Plugin.WSLTools
     public static PluginInitContext GetContext()
     {
       return _context;
+    }
+
+    public static Version GetVersion()
+    {
+      return version;
     }
   }
 }
