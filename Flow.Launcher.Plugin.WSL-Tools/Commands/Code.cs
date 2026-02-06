@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.WSLTools
       return results;
     }
 
-    private static void OpenVSCode(string path, Settings settings)
+    public static void OpenVSCode(string path, Settings settings)
     {
       string fileName = Path.GetFileName(path);
       string wslNetworkPath = $"\\\\wsl$\\{settings.distroName}";

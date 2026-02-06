@@ -10,18 +10,19 @@ namespace Flow.Launcher.Plugin.WSLTools
 {
   public class WslTools : IAsyncPlugin, ISettingProvider
   {
-    private static PluginInitContext _context;
-    private static Settings _settings;
+    private static PluginInitContext context;
+    private static Settings settings;
     private static Version version;
 
     public async Task InitAsync(PluginInitContext context)
     {
-      _context = context;
-      _settings = context.API.LoadSettingJsonStorage<Settings>();
+      WslTools.context = context;
+      settings = context.API.LoadSettingJsonStorage<Settings>();
 
-      if (!string.IsNullOrEmpty(_settings.apiToken))
+      if (!string.IsNullOrEmpty(settings.apiToken))
       {
-        GithubApi.Init(context, _settings);
+        GithubApi.Init(context, settings);
+        await GithubApi.LoadReposToCache();
       }
 
       try
@@ -49,8 +50,9 @@ namespace Flow.Launcher.Plugin.WSLTools
       {
         return query.ActionKeyword switch
         {
-          "c" => await Task.Run(() => CodeCommand.Query(query, _settings, _context)),
-          "wt" => await Task.Run(() => UpdateCommand.Query(_settings, _context)),
+          "c" => await Task.Run(() => CodeCommand.Query(query, settings, context)),
+          "wt" => await Task.Run(() => UpdateCommand.Query(settings, context)),
+          "clone" => await Task.Run(() => SearchCommand.Query(query)),
           _ => await Task.Run(() => new List<Result> {
             new Result {
               Title = "Unknown action keyword - '" + query.ActionKeyword + "'",
@@ -70,39 +72,39 @@ namespace Flow.Launcher.Plugin.WSLTools
     }
 
     private static void CheckIfUpdated() {
-      if (string.IsNullOrEmpty(_settings.apiToken))
+      if (string.IsNullOrEmpty(settings.apiToken))
       {
         return;
       }
 
-      string priorVersion = _settings.version;
+      string priorVersion = settings.version;
 
       if (priorVersion == null) {
-        _settings.version = version.ToString();
-        _context.API.SaveSettingJsonStorage<Settings>();
+        settings.version = version.ToString();
+        context.API.SaveSettingJsonStorage<Settings>();
 
-        _context.API.ShowMsg("WSL-Tools has been installed");
+        context.API.ShowMsg("WSL-Tools has been installed");
 
         return;
       }
 
       if (version != null && priorVersion != version.ToString())
       {
-        _settings.version = version.ToString();
-        _context.API.SaveSettingJsonStorage<Settings>();
+        settings.version = version.ToString();
+        context.API.SaveSettingJsonStorage<Settings>();
 
-        _context.API.ShowMsg("WSL-Tools has been updated to version " + version);
+        context.API.ShowMsg("WSL-Tools has been updated to version " + version);
       }
     }
 
     public static Settings GetSettings()
     {
-      return _settings;
+      return settings;
     }
 
     public static PluginInitContext GetContext()
     {
-      return _context;
+      return context;
     }
 
     public static Version GetVersion()
